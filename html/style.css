@@ -1,0 +1,139 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: rgb(11, 80, 107);
+}
+
+#title {
+    align-self: center;
+}
+
+h1 {
+    margin: 3px;
+    font-size: 1.3rem;
+    font-weight: normal;
+}
+
+#container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 95%;
+    height: 95vh;
+    padding: 5px;
+    background-color: aquamarine;
+}
+
+#conversation {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-width: 1px;
+    flex: 1;
+    overflow-y: scroll;
+}
+
+#conversation > div {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    width: 80%;
+    margin: 2px;
+    padding: 5px;
+}
+
+.AI-message {
+    align-self: flex-start;
+    background-color: rgb(230, 161, 121);
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: rgb(174, 230, 129);
+}
+
+#prompt {
+    position: fixed;
+    top: -200px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-items: center;
+    width: 80%;
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: rgb(174, 230, 129);
+    box-shadow: 8px 8px 8px rgba(20, 20, 20, .5), 5px 5px 5px rgba(20, 20, 20, .8);
+    z-index: 9999;
+}
+
+#prompt[data-open="true"] {
+    top: 20%;
+}
+
+fieldset {
+    margin: 0;
+}
+
+#prompt-text {
+    max-width: 100%;
+    min-width: 100%;
+    resize: vertical;
+}
+
+#buttons {
+    align-self: flex-end;
+}
+
+#mask {
+    position: fixed;
+    display: none;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(20, 20, 20, .4);
+    z-index: 999;
+}
+
+#mask[data-open="true"] {
+    display: block;
+}
+
+#prompt-button {
+    position: relative;
+    width: fit-content;         
+    bottom: 60px;
+    left: 86%;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: rgb(174, 230, 129);
+    z-index: 999;
+    box-shadow: 8px 8px 8px rgba(20, 20, 20, .5), 5px 5px 5px rgba(20, 20, 20, .8);
+}
+
+#prompt-button:hover, #prompt-button:focus {
+    background-color: rgb(233, 236, 13);
+}
+
+@media screen and (min-width: 768px) {
+    #container {
+        width: 70%;
+        height: 90vh;
+    }
+
+    #prompt {
+        width: 30%;
+    }
+
+    #prompt-button {
+        left: 92%;
+    }
+}

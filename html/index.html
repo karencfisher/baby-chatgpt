@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot!</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main id="container">
+        <header id="title">
+            <h1>Baby ChatGPT</h1>
+        </header>
+        <div id="conversation"></div>
+        <button id="prompt-button">
+            <span class="material-icons-outlined">chat</span>
+        </button>
+    </main>
+
+    <div id="prompt" data-open="false">
+        <fieldset>
+            <legend>User Message</legend>
+                <textarea id="prompt-text" rows="6" placeholder="Enter your prompt here" 
+                    aria-label="prompt" tabindex="-1"></textarea>
+        </fieldset>
+        <div id="buttons">
+            <button class="button" id="send-button" tabindex="-1">
+                <span class="material-icons-outlined">send</span>
+            </button>
+            <button class="button" id="cancel-button" tabindex="-1">
+                <span class="material-icons-outlined">cancel</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="mask" data-open="false"></div> 
+</body>
+</html>
