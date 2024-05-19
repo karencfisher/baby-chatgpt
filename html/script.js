@@ -1,4 +1,3 @@
-
 const conversation = document.getElementById("conversation");
 function addMessage(msg, role) {
     const msgDiv = document.createElement("div");
@@ -98,6 +97,33 @@ promptButton.addEventListener("click", () => {
     togglePrompt();
 });
 
-addEventListener("load", () => {
-    togglePrompt();
+const drawerButton = document.getElementById("drawer-button");
+const drawer = document.getElementById("drawer");
+let drawerOpen = false;
+drawerButton.addEventListener("click", () => {
+    drawerOpen = !drawerOpen;
+    drawer.dataset.open = `${drawerOpen}`;
+    mask.dataset.open = `${drawerOpen}`;
+});
+
+mask.addEventListener("click", () => {
+    if (drawer.dataset.open === "true") {
+        drawer.dataset.open = "false";
+        mask.dataset.open = "false";
+        drawerOpen = false;
+    }
+});
+
+const models = [...document.getElementsByClassName("models")];
+models.forEach((item) => {
+    item.addEventListener("change", async (e) => {
+        const query = `/set-model?model=${e.target.value}`;
+        try {
+            await fetch(query);
+        }
+        catch(error) {
+            console.error(`Error: ${error}`);
+            throw(error);
+        }
+    });
 });

@@ -11,14 +11,31 @@
 
 <body>
     <main id="container">
-        <header id="title">
-            <h1>Baby ChatGPT</h1>
+        <header>
+            <button id="drawer-button">
+                <span class="material-icons-outlined" id="hamburger">menu</span>
+            </button>
+            <div id="title">
+                <h1>Mini ChatGPT</h1>
+            </div>
         </header>
         <div id="conversation"></div>
         <button id="prompt-button">
             <span class="material-icons-outlined">chat</span>
         </button>
     </main>
+
+    <div id="drawer" data-open="false">
+        <fieldset>
+            <legend>model</legend>
+                <input type="radio" class="models" id="gpt-3.5" name="models" value="gpt-3.5-turbo" checked>
+                <label for="gpt-3.5">gpt-3.5-turbo</label><br>
+                <input type="radio" class="models" id="gpt-4" name="models" value="gpt-4-turbo">
+                <label for="gpt-4">gpt-4-turbo</label><br>
+                <input type="radio" class="models" id="gpt-4o" name="models" value="gpt-4o">
+                <label for="gpt-4o">gpt-4o</label><br>
+        </fieldset>
+    </div>
 
     <div id="prompt" data-open="false">
         <fieldset>
