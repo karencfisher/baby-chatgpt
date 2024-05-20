@@ -41,8 +41,9 @@ const cancelButton = document.getElementById("cancel-button");
 async function sendPrompt() {
     const prompt = promptText.value.trim();
     addMessage(prompt, "user");
+    let result = null;
     try {
-        const result = await getResponse(prompt);
+        result = await getResponse(prompt);
     }
     catch(error) {
         return;
