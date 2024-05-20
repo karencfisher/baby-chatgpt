@@ -29,7 +29,7 @@ async function getResponse(prompt) {
         return contents.result.kwargs.content;
     }
     catch(error) {
-        displayError(`Error sending to model. Might be offline?`);
+        displayError(`Error sending message to model. Might be offline?`);
         throw(error);
     }
 }
