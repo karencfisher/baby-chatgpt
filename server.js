@@ -85,6 +85,9 @@ app.get('/set-model', (req, res) => {
   chat.model = req.query.model;
   chat.modelName = req.query.model;
   console.log(`Model is now ${req.query.model}`);
+
+  // Send a response to the client
+  res.status(200).send(`Model is now ${req.query.model}`);
 });
 
 app.use(express.static(path.join(__dirname, 'html')));

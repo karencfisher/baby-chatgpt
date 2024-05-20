@@ -29,7 +29,7 @@ async function getResponse(prompt) {
         return contents.result.kwargs.content;
     }
     catch(error) {
-        displayError(`Error sending message to model. Might be offline?`);
+        displayError("Error", `Error sending message to model. Might be offline?`);
         throw(error);
     }
 }
@@ -82,7 +82,7 @@ function togglePrompt() {
 
 sendButton.addEventListener("click", () => {
     if (promptText.value === "") {
-        displayError("Prompt is empty!")
+        displayError("error", "Prompt is empty!")
         return;
     }
 
@@ -132,12 +132,10 @@ models.forEach((item) => {
         const query = `/set-model?model=${e.target.value}`;
         try {
             const result = await fetch(query);
-            if (result.status !== 200) {
-                displayError(`Error setting model. Might be offline?`);
-            }
+            displayError("info", `Model is now ${e.target.value}.`);
         }
         catch(error) {
-            displayError(`Error setting model. Might be offline?`);
+            displayError("error", `Error setting model. Might be offline?`);
         }
     });
 });
@@ -145,7 +143,7 @@ models.forEach((item) => {
 const downloadButton = document.getElementById("download-button");
 downloadButton.addEventListener("click", () => {
     if (document.getElementById("chat-title").value === "" || conversation.childElementCount === 0) {
-        displayError("Chat title or conversation is empty!");
+        displayError("error", "Chat title or conversation is empty!");
         return;
     }
     const chatLog = document.createElement("div");
@@ -178,9 +176,17 @@ closeButton.addEventListener("click", () => {
     drawerOpen = false;
 });
 
-function displayError(msg) {
+function displayError(type, msg) {
     const errorMsg = document.getElementById("error-msg");
     const errortxt = document.getElementById("error-txt");
+    const msgIcon = document.getElementById("msg-icon");
+    if (type === "info") {
+        msgIcon.innerText = "info";
+    }
+    else {
+        msgIcon.innerText = "error_outline";
+    }
+
     errortxt.innerText = msg;
     errorMsg.dataset.open = "true";
     mask.dataset.open = "true";
