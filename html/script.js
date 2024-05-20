@@ -29,17 +29,24 @@ async function getResponse(prompt) {
         return contents.result.kwargs.content;
     }
     catch(error) {
-        displayError(`Error: ${error}`);
+        displayError(`Error sending to model. Might be offline?`);
+        throw(error);
     }
 }
 
 const promptText = document.getElementById("prompt-text");
 const sendButton = document.getElementById("send-button");
 const cancelButton = document.getElementById("cancel-button");
+
 async function sendPrompt() {
     const prompt = promptText.value.trim();
     addMessage(prompt, "user");
-    const result = await getResponse(prompt);
+    try {
+        const result = await getResponse(prompt);
+    }
+    catch(error) {
+        return;
+    }
     addMessage(result, "AI");
 }
 
@@ -123,10 +130,13 @@ models.forEach((item) => {
     item.addEventListener("change", async (e) => {
         const query = `/set-model?model=${e.target.value}`;
         try {
-            await fetch(query);
+            const result = await fetch(query);
+            if (result.status !== 200) {
+                displayError(`Error setting model. Might be offline?`);
+            }
         }
         catch(error) {
-            displayError(`Error: ${error}`);
+            displayError(`Error setting model. Might be offline?`);
         }
     });
 });
