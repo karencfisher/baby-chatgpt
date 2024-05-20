@@ -90,13 +90,6 @@ sendButton.addEventListener("click", () => {
     togglePrompt();
 });
 
-promptText.addEventListener("keypress", (e) => {
-    if (e.code === "Enter") {
-        sendPrompt();
-        togglePrompt();
-    }
-});
-
 cancelButton.addEventListener("click", () => {
     togglePrompt();
 });
@@ -132,6 +125,10 @@ models.forEach((item) => {
         const query = `/set-model?model=${e.target.value}`;
         try {
             const result = await fetch(query);
+            if (result.status !== 200) {
+                displayError("error", `Network error. Might be offline?\nStatus ${result.status}`);
+                return;
+            }
             displayError("info", `Model is now ${e.target.value}.`);
         }
         catch(error) {

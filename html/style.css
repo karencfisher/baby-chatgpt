@@ -72,7 +72,6 @@ h1 {
     flex-direction: column;
     top: 42px;
     left: -600px;
-    height: 60vh;
     width: 220px;
     background-color: rgb(174, 230, 129);
     z-index: 999;
