@@ -147,6 +147,7 @@ downloadButton.addEventListener("click", () => {
             role ="AI";
         }
         const msg = document.createElement("p");
+        msg.style.setProperty("word-wrap", "break-word");
         msg.innerHTML = `<b>${role}:</b> ${child.innerText}\n\n`;
         chatLog.appendChild(msg);
     }
