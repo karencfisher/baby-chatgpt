@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 configDotenv();
-const chat = new ChatOpenAI({
+let chat = new ChatOpenAI({
     model: "gpt-3.5-turbo",
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.8
@@ -77,6 +77,17 @@ app.post('/ask', async (req, res) => {
     console.error('Error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.get('/set-model', (req, res) => {
+  // hope OpenAI doesn't break my hack
+  chat.lc_kwargs.model = req.query.model;
+  chat.model = req.query.model;
+  chat.modelName = req.query.model;
+  console.log(`Model is now ${req.query.model}`);
+
+  // Send a response to the client
+  res.status(200).send(`Model is now ${req.query.model}`);
 });
 
 app.use(express.static(path.join(__dirname, 'html')));
