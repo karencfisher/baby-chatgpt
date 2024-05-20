@@ -29,8 +29,7 @@ async function getResponse(prompt) {
         return contents.result.kwargs.content;
     }
     catch(error) {
-        console.error(`Error: ${error}`);
-        throw(error);
+        displayError(`Error: ${error}`);
     }
 }
 
@@ -38,9 +37,6 @@ const promptText = document.getElementById("prompt-text");
 const sendButton = document.getElementById("send-button");
 const cancelButton = document.getElementById("cancel-button");
 async function sendPrompt() {
-    if (promptText.value === "") {
-        return;
-    }
     const prompt = promptText.value.trim();
     addMessage(prompt, "user");
     const result = await getResponse(prompt);
@@ -77,6 +73,11 @@ function togglePrompt() {
 }
 
 sendButton.addEventListener("click", () => {
+    if (promptText.value === "") {
+        displayError("Prompt is empty!")
+        return;
+    }
+
     sendPrompt();
     togglePrompt();
 });
@@ -125,15 +126,15 @@ models.forEach((item) => {
             await fetch(query);
         }
         catch(error) {
-            console.error(`Error: ${error}`);
-            throw(error);
+            displayError(`Error: ${error}`);
         }
     });
 });
 
 const downloadButton = document.getElementById("download-button");
 downloadButton.addEventListener("click", () => {
-    if (chatTitleField.innerText === "") {
+    if (document.getElementById("chat-title").value === "" || conversation.childElementCount === 0) {
+        displayError("Chat title or conversation is empty!");
         return;
     }
     const chatLog = document.createElement("div");
@@ -165,3 +166,16 @@ closeButton.addEventListener("click", () => {
     mask.dataset.open = "false";
     drawerOpen = false;
 });
+
+function displayError(msg) {
+    const errorMsg = document.getElementById("error-msg");
+    const errortxt = document.getElementById("error-txt");
+    errortxt.innerText = msg;
+    errorMsg.dataset.open = "true";
+    mask.dataset.open = "true";
+
+    setTimeout(() => {
+        errorMsg.dataset.open = "false";
+        mask.dataset.open = "false";
+    }, 2000);
+}
