@@ -112,6 +112,9 @@ mask.addEventListener("click", () => {
         mask.dataset.open = "false";
         drawerOpen = false;
     }
+    else if (prompt.dataset.open === "true") {
+        togglePrompt();
+    }
 });
 
 const models = [...document.getElementsByClassName("models")];
@@ -126,4 +129,38 @@ models.forEach((item) => {
             throw(error);
         }
     });
+});
+
+const downloadButton = document.getElementById("download-button");
+downloadButton.addEventListener("click", () => {
+    if (chatTitleField.innerText === "") {
+        return;
+    }
+    const chatLog = document.createElement("div");
+    const chatTitleField = document.createElement("h2");
+    chatTitleField.innerText = document.getElementById("chat-title").value;
+    chatLog.appendChild(chatTitleField);
+
+    for (const child of conversation.children) {
+        let role = "Human";
+        if (child.className === "AI-message") {
+            role ="AI";
+        }
+        const msg = document.createElement("p");
+        msg.innerHTML = `<b>${role}:</b> ${child.innerText}\n\n`;
+        chatLog.appendChild(msg);
+    }
+
+    const opt = {
+        filename: chatTitleField.innerText.replace(" ", "_"),
+        margin: 10
+    }
+    html2pdf().set(opt).from(chatLog).save();
+});
+
+const closeButton = document.getElementById("close-button");
+closeButton.addEventListener("click", () => {
+    drawer.dataset.open = "false";
+    mask.dataset.open = "false";
+    drawerOpen = false;
 });

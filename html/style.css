@@ -68,11 +68,12 @@ h1 {
 #drawer {
     position: fixed;
     display: flex;
+    gap: 10px;
     flex-direction: column;
     top: 42px;
     left: -600px;
     height: 60vh;
-    width: 200px;
+    width: 220px;
     background-color: rgb(174, 230, 129);
     z-index: 999;
     padding: 5px;
@@ -99,6 +100,14 @@ h1 {
     background-color: rgb(174, 230, 129);
     box-shadow: 8px 8px 8px rgba(20, 20, 20, .5), 5px 5px 5px rgba(20, 20, 20, .8);
     z-index: 9999;
+    transition: top .5s;
+}
+
+#download-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: fit-content;
 }
 
 #prompt[data-open="true"] {
@@ -107,6 +116,24 @@ h1 {
 
 fieldset {
     margin: 0;
+}
+
+fieldset#download-fs {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+fieldset#download-fs > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+#close-button {
+    width: fit-content;
+    align-self: flex-end;
 }
 
 #prompt-text {
