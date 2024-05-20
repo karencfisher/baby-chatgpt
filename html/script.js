@@ -141,20 +141,21 @@ models.forEach((item) => {
 });
 
 const downloadButton = document.getElementById("download-button");
-downloadButton.addEventListener("click", () => {
-    if (document.getElementById("chat-title").value === "" || conversation.childElementCount === 0) {
+downloadButton.addEventListener("click", async () => {
+    const chatTitle = document.getElementById("chat-title").value;
+    if (chatTitle === "" || conversation.childElementCount === 0) {
         displayError("error", "Chat title or conversation is empty!");
         return;
     }
     const chatLog = document.createElement("div");
     const chatTitleField = document.createElement("h2");
-    chatTitleField.innerText = document.getElementById("chat-title").value;
+    chatTitleField.innerText = chatTitle;
     chatLog.appendChild(chatTitleField);
 
     for (const child of conversation.children) {
         let role = "Human";
         if (child.className === "AI-message") {
-            role ="AI";
+            role = "AI";
         }
         const msg = document.createElement("p");
         msg.style.setProperty("word-wrap", "break-word");
@@ -163,10 +164,26 @@ downloadButton.addEventListener("click", () => {
     }
 
     const opt = {
-        filename: chatTitleField.innerText.replace(" ", "_"),
         margin: 10
+    };
+
+    try {
+        // Generate the PDF content as a blob
+        const pdfBlob = await html2pdf().set(opt).from(chatLog).outputPdf('blob');
+        
+        // Create a download link and trigger it
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = chatTitle.replace(" ", "_") + ".pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        displayError("error", "Error generating or downloading the PDF. Please try again.");
     }
-    html2pdf().set(opt).from(chatLog).save();
 });
 
 const closeButton = document.getElementById("close-button");
