@@ -100,7 +100,7 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   if (process.env.USER_TOKEN === req.body.userToken) {
-    isAuth= true;
+    isAuth = true;
     res.redirect('/chat');
   }
   else {
