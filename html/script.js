@@ -30,7 +30,6 @@ async function getResponse(prompt) {
     }
     catch(error) {
         displayError("Error", `Error sending message to model. Might be offline?`);
-        throw(error);
     }
 }
 

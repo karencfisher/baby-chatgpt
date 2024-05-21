@@ -22,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 configDotenv();
-let chat = new ChatOpenAI({
+const chat = new ChatOpenAI({
     model: "gpt-3.5-turbo",
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.8
@@ -93,8 +93,17 @@ app.get('/set-model', (req, res) => {
 app.use(express.static(path.join(__dirname, 'html')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html', 'index.html'));
+  res.sendFile(path.join(__dirname, 'html', 'login.html'));
 })
+
+app.post('/login', (req, res) => {
+  if (process.env.USER_TOKEN === req.body.userToken) {
+    res.sendFile(path.join(__dirname, 'html', 'index.html'));
+  }
+  else {
+    res.status(403).send("Forbidden");
+  }
+});
 
 // Start the server
 app.listen(port, () => {
