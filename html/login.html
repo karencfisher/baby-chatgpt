@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="login.js" defer></script>
+</head>
+<body>
+    <main id="container">
+        <header>
+            <div id="title">
+                <h1>Mini ChatGPT</h1>
+            </div>
+        </header>
+        <fieldset id="login-fs">
+            <legend>Login with user token</legend>
+            <div id="token-field">
+                <input id="token-text" type="password" placeholder="Enter token" 
+                    aria-label="user token">
+                <span id="eye" class="material-icons-outlined">visibility</span>
+            </div>
+            <button id="login-button">
+                <span class="material-icons-outlined">login</span>
+            </button>
+        </fieldset>
+    </main>
+
+    <div id="error-msg" data-open="false">
+        <span class="material-icons-outlined" id="msg-icon">error_outline</span>
+        <div id="error-txt">An error happened</div>
+    </div>
+</body>
+</html>

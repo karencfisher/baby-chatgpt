@@ -30,7 +30,6 @@ async function getResponse(prompt) {
     }
     catch(error) {
         displayError("Error", `Error sending message to model. Might be offline?`);
-        throw(error);
     }
 }
 
@@ -193,3 +192,7 @@ function displayError(type, msg) {
         mask.dataset.open = "false";
     }, 2000);
 }
+
+addEventListener("unload", async () => {
+    result = await fetch("/logout");
+});

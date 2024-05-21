@@ -13,6 +13,7 @@ import { fileURLToPath } from 'url';
 
 const app = express();
 const port = 3000;
+let isAuth = false;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -22,7 +23,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 configDotenv();
-let chat = new ChatOpenAI({
+const chat = new ChatOpenAI({
     model: "gpt-3.5-turbo",
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.8
@@ -93,8 +94,33 @@ app.get('/set-model', (req, res) => {
 app.use(express.static(path.join(__dirname, 'html')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html', 'index.html'));
+  isAuth = false;
+  res.sendFile(path.join(__dirname, 'html', 'login.html'));
 })
+
+app.post('/login', (req, res) => {
+  if (process.env.USER_TOKEN === req.body.userToken) {
+    isAuth = true;
+    res.redirect('/chat');
+  }
+  else {
+    res.status(403).send("Forbidden");
+  }
+});
+
+app.get('/chat', (req, res) => {
+  if (isAuth) {
+    res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
+  }
+  else {
+    res.status(403).send("Forbidden");
+  }
+})
+
+app.get("/logout", (req, res) => {
+  isAuth = false;
+  res.status(200).send("Success");
+});
 
 // Start the server
 app.listen(port, () => {
