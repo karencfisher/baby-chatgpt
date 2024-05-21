@@ -192,3 +192,7 @@ function displayError(type, msg) {
         mask.dataset.open = "false";
     }, 2000);
 }
+
+addEventListener("unload", async () => {
+    result = await fetch("/logout");
+});

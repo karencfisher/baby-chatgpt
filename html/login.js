@@ -20,6 +20,7 @@ async function sendToken(token) {
     }
     catch(error) {
         displayError("Error", `Error logging on\n${error}`);
+        tokenText.value = "";
     }
 }
 
@@ -45,4 +46,21 @@ function displayError(type, msg) {
         errorMsg.dataset.open = "false";
     }, 2000);
 }
+
+const eye = document.getElementById("eye");
+let eyeOpen = true;
+eye.addEventListener("click", () => {
+    eyeOpen = !eyeOpen;
+    if (eyeOpen) {
+        tokenText.type = "password";
+        eye.innerHTML = "visibility";
+    }
+    else {
+        tokenText.type = "text";
+        eye.innerHTML = "visibility_off";
+    }
+    tokenText.focus();
+});
+
+addEventListener("load", () => tokenText.focus());
 

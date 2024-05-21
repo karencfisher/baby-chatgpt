@@ -16,15 +16,17 @@
                 <h1>Mini ChatGPT</h1>
             </div>
         </header>
-        <main>
-            <fieldset id="login-fs">
-                <legend>Login with user token</legend>
-                <input id="token-text" type="password" placeholder="Enter token" aria-label="user token">
-                <button id="login-button">
-                    <span class="material-icons-outlined">login</span>
-                </button>
-            </fieldset>
-        </main>
+        <fieldset id="login-fs">
+            <legend>Login with user token</legend>
+            <div id="token-field">
+                <input id="token-text" type="password" placeholder="Enter token" 
+                    aria-label="user token">
+                <span id="eye" class="material-icons-outlined">visibility</span>
+            </div>
+            <button id="login-button">
+                <span class="material-icons-outlined">login</span>
+            </button>
+        </fieldset>
     </main>
 
     <div id="error-msg" data-open="false">

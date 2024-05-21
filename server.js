@@ -13,6 +13,7 @@ import { fileURLToPath } from 'url';
 
 const app = express();
 const port = 3000;
+let isAuth = false;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -93,11 +94,13 @@ app.get('/set-model', (req, res) => {
 app.use(express.static(path.join(__dirname, 'html')));
 
 app.get('/', (req, res) => {
+  isAuth = false;
   res.sendFile(path.join(__dirname, 'html', 'login.html'));
 })
 
 app.post('/login', (req, res) => {
   if (process.env.USER_TOKEN === req.body.userToken) {
+    isAuth= true;
     res.redirect('/chat');
   }
   else {
@@ -106,8 +109,18 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
+  if (isAuth) {
+    res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
+  }
+  else {
+    res.status(403).send("Forbidden");
+  }
 })
+
+app.get("/logout", (req, res) => {
+  isAuth = false;
+  res.status(200).send("Success");
+});
 
 // Start the server
 app.listen(port, () => {
