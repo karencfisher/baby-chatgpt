@@ -98,12 +98,16 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
   if (process.env.USER_TOKEN === req.body.userToken) {
-    res.sendFile(path.join(__dirname, 'html', 'index.html'));
+    res.redirect('/chat');
   }
   else {
     res.status(403).send("Forbidden");
   }
 });
+
+app.get('/chat', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
+})
 
 // Start the server
 app.listen(port, () => {

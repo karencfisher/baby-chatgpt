@@ -14,6 +14,8 @@ async function sendToken(token) {
         );
         if (result.status === 403) {
             displayError("Error", "Invalid token!");
+        } else if (result.redirected) {
+            window.location.href = result.url; // Handle redirect
         }
     }
     catch(error) {
@@ -24,4 +26,23 @@ async function sendToken(token) {
 loginButton.addEventListener("click", async () => {
     await sendToken(tokenText.value);
 });
+
+function displayError(type, msg) {
+    const errorMsg = document.getElementById("error-msg");
+    const errortxt = document.getElementById("error-txt");
+    const msgIcon = document.getElementById("msg-icon");
+    if (type === "info") {
+        msgIcon.innerText = "info";
+    }
+    else {
+        msgIcon.innerText = "error_outline";
+    }
+
+    errortxt.innerText = msg;
+    errorMsg.dataset.open = "true";
+
+    setTimeout(() => {
+        errorMsg.dataset.open = "false";
+    }, 2000);
+}
 
