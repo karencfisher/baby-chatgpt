@@ -1,9 +1,9 @@
 const conversation = document.getElementById("conversation");
 function addMessage(msg, role) {
-    msg = msg.replaceAll("\n", "<br>");
     msg = msg.replace(/```(?:\w+\n)?([\s\S]*?)```/g, (match, code) => {
         return `<pre>${code.trim()}</pre>`;
     });
+    msg = msg.replaceAll("\n", "<br>");
 
     const msgDiv = document.createElement("div");
     if (role === "AI") {
