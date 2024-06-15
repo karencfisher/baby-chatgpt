@@ -14,12 +14,16 @@ async function sendToken(token) {
         );
         if (result.status === 403) {
             displayError("Error", "Invalid token!");
-        } else if (result.redirected) {
+        } 
+        else if (result.status !== 200) {
+            displayError("Error", `An error occured.\nStatus ${result.status}`);
+        }
+        else if (result.redirected) {
             window.location.href = result.url; // Handle redirect
         }
     }
     catch(error) {
-        displayError("Error", `Error logging on\n${error}`);
+        displayError("Error", `Error occured\n${error}`);
         tokenText.value = "";
     }
 }

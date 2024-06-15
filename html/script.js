@@ -1,5 +1,10 @@
 const conversation = document.getElementById("conversation");
 function addMessage(msg, role) {
+    msg = msg.replaceAll("\n", "<br>");
+    msg = msg.replace(/```(?:\w+\n)?([\s\S]*?)```/g, (match, code) => {
+        return `<pre>${code.trim()}</pre>`;
+    });
+
     const msgDiv = document.createElement("div");
     if (role === "AI") {
         msgDiv.classList.add("AI-message");
@@ -7,7 +12,7 @@ function addMessage(msg, role) {
     else {
         msgDiv.classList.add("user-message");
     }
-    msgDiv.innerText = msg;
+    msgDiv.innerHTML = msg;
     conversation.appendChild(msgDiv);
     conversation.scrollTop = conversation.scrollHeight;
 }

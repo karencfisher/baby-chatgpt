@@ -32,7 +32,7 @@ const chat = new ChatOpenAI({
 const prompt = ChatPromptTemplate.fromMessages([
     [
       "system",
-      "You are a friendly and helpful assistant. Answer all questions to the best of your ability.",
+      "You are a friendly and helpful assistant. Answer all questions to the best of your ability."
     ],
     new MessagesPlaceholder("chat_history"),
     ["human", "{input}"],
@@ -94,9 +94,11 @@ app.get('/set-model', (req, res) => {
 app.use(express.static(path.join(__dirname, 'html')));
 
 app.get('/', (req, res) => {
-  isAuth = false;
+  if (isAuth) {
+    return res.status(503).send("Service in use. Try again later.");
+  }
   res.sendFile(path.join(__dirname, 'html', 'login.html'));
-})
+});
 
 app.post('/login', (req, res) => {
   if (process.env.USER_TOKEN === req.body.userToken) {
