@@ -159,7 +159,7 @@ downloadButton.addEventListener("click", () => {
         }
         const msg = document.createElement("p");
         msg.style.setProperty("word-wrap", "break-word");
-        msg.innerHTML = `<b>${role}:</b> ${child.innerText}\n\n`;
+        msg.innerHTML = `<b>${role}:</b> ${child.innerHTML}\n\n`;
         chatLog.appendChild(msg);
     }
 
