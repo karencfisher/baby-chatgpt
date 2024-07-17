@@ -55,12 +55,6 @@ h1 {
     padding: 5px;
 }
 
-pre {
-    white-space: pre-wrap;
-    word-break: keep-all;
-    word-wrap: break-word;
-}
-
 .AI-message {
     align-self: flex-start;
     background-color: rgb(230, 161, 121);
@@ -76,7 +70,7 @@ pre {
     display: flex;
     gap: 10px;
     flex-direction: column;
-    top: 42px;
+    top: 20%;
     left: -600px;
     width: 220px;
     background-color: rgb(174, 230, 129);
@@ -87,7 +81,7 @@ pre {
 }
 
 #drawer[data-open = "true"] {
-    left: 12px;
+    left: 20%;
 }
 
 #prompt {
@@ -222,6 +216,6 @@ fieldset#download-fs > button {
     }
     
     #drawer[data-open="true"] {
-        left: 15.2%;
+        left: 40%;
     }
 }
