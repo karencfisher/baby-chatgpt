@@ -141,11 +141,13 @@ downloadButton.addEventListener("click", () => {
         chatLog.appendChild(msg);
     }
 
-    const opt = {
-        filename: chatTitleField.innerText.replace(" ", "_"),
-        margin: 10
-    }
-    html2pdf().set(opt).from(chatLog).save();
+    const blob = new Blob([chatLog.innerHTML], { type: "text/html"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${chatTitleField.innerText.replace(" ", "_")}.html`
+    a.click();
+    URL.revokeObjectURL(a.href);
+    URL.revokeObjectURL(chatLog);
 });
 
 const closeButton = document.getElementById("close-button");

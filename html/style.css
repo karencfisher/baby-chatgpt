@@ -55,6 +55,12 @@ h1 {
     padding: 5px;
 }
 
+pre {
+    white-space: pre-wrap;
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
 .AI-message {
     align-self: flex-start;
     background-color: rgb(230, 161, 121);
