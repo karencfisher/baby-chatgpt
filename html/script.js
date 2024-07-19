@@ -1,10 +1,6 @@
 const conversation = document.getElementById("conversation");
 function addMessage(msg, role) {
-    msg = msg.replace(/```(?:\w+\n)?([\s\S]*?)```/g, (match, code) => {
-        return `<pre>${code.trim()}</pre>`;
-    });
-    msg = msg.replaceAll("\n", "<br>");
-
+    const htmlContent = marked.parse(msg);
     const msgDiv = document.createElement("div");
     if (role === "AI") {
         msgDiv.classList.add("AI-message");
@@ -12,7 +8,7 @@ function addMessage(msg, role) {
     else {
         msgDiv.classList.add("user-message");
     }
-    msgDiv.innerHTML = msg;
+    msgDiv.innerHTML = htmlContent;
     conversation.appendChild(msgDiv);
     conversation.scrollTop = conversation.scrollHeight;
 }
@@ -123,24 +119,6 @@ mask.addEventListener("click", () => {
     }
 });
 
-const models = [...document.getElementsByClassName("models")];
-models.forEach((item) => {
-    item.addEventListener("change", async (e) => {
-        const query = `/set-model?model=${e.target.value}`;
-        try {
-            const result = await fetch(query);
-            if (result.status !== 200) {
-                displayError("error", `Network error. Might be offline?\nStatus ${result.status}`);
-                return;
-            }
-            displayError("info", `Model is now ${e.target.value}.`);
-        }
-        catch(error) {
-            displayError("error", `Error setting model. Might be offline?`);
-        }
-    });
-});
-
 const downloadButton = document.getElementById("download-button");
 downloadButton.addEventListener("click", () => {
     if (document.getElementById("chat-title").value === "" || conversation.childElementCount === 0) {
@@ -163,11 +141,13 @@ downloadButton.addEventListener("click", () => {
         chatLog.appendChild(msg);
     }
 
-    const opt = {
-        filename: chatTitleField.innerText.replace(" ", "_"),
-        margin: 10
-    }
-    html2pdf().set(opt).from(chatLog).save();
+    const blob = new Blob([chatLog.innerHTML], { type: "text/html"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${chatTitleField.innerText.replace(" ", "_")}.html`
+    a.click();
+    URL.revokeObjectURL(a.href);
+    URL.revokeObjectURL(chatLog);
 });
 
 const closeButton = document.getElementById("close-button");

@@ -1,8 +1,5 @@
-import { ChatOpenAI } from "@langchain/openai";
-import {
-    ChatPromptTemplate,
-    MessagesPlaceholder,
-} from "@langchain/core/prompts";
+import { ChatGroq } from "@langchain/groq";
+import { ChatPromptTemplate, MessagesPlaceholder} from "@langchain/core/prompts";
 import { RunnableWithMessageHistory } from "@langchain/core/runnables";
 import { ChatMessageHistory } from "@langchain/community/stores/message/in_memory";
 import { configDotenv } from "dotenv";
@@ -13,7 +10,6 @@ import { fileURLToPath } from 'url';
 
 const app = express();
 const port = 3000;
-let isAuth = false;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -23,10 +19,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 configDotenv();
-const chat = new ChatOpenAI({
-    model: "gpt-3.5-turbo",
-    openAIApiKey: process.env.OPENAI_API_KEY,
-    temperature: 0.8
+const chat = new ChatGroq({
+  apiKey: process.env.GROQ_API_KEY,
+  model: "llama3-70b-8192",
+  temperature: 0.8
 })
 
 const prompt = ChatPromptTemplate.fromMessages([
@@ -64,6 +60,12 @@ const promptFunc = async (prompt) => {
 };
 
 // Endpoint to handle request
+app.use(express.static(path.join(__dirname, 'html')));
+
+app.get('/', (req, res) => {
+  return res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
+});
+
 app.post('/ask', async (req, res) => {
   try {
     const userQuestion = req.body.question;
@@ -78,50 +80,6 @@ app.post('/ask', async (req, res) => {
     console.error('Error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
-
-app.get('/set-model', (req, res) => {
-  // hope OpenAI doesn't break my hack
-  chat.lc_kwargs.model = req.query.model;
-  chat.model = req.query.model;
-  chat.modelName = req.query.model;
-  console.log(`Model is now ${req.query.model}`);
-
-  // Send a response to the client
-  res.status(200).send(`Model is now ${req.query.model}`);
-});
-
-app.use(express.static(path.join(__dirname, 'html')));
-
-app.get('/', (req, res) => {
-  if (isAuth) {
-    return res.status(503).send("Service in use. Try again later.");
-  }
-  res.sendFile(path.join(__dirname, 'html', 'login.html'));
-});
-
-app.post('/login', (req, res) => {
-  if (process.env.USER_TOKEN === req.body.userToken) {
-    isAuth = true;
-    res.redirect('/chat');
-  }
-  else {
-    res.status(403).send("Forbidden");
-  }
-});
-
-app.get('/chat', (req, res) => {
-  if (isAuth) {
-    res.sendFile(path.join(__dirname, 'html', 'chatbot.html'));
-  }
-  else {
-    res.status(403).send("Forbidden");
-  }
-})
-
-app.get("/logout", (req, res) => {
-  isAuth = false;
-  res.status(200).send("Success");
 });
 
 // Start the server

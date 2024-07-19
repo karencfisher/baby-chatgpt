@@ -10,6 +10,7 @@
         integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
                 <span class="material-icons-outlined" id="hamburger">menu</span>
             </button>
             <div id="title">
-                <h1>Mini ChatGPT</h1>
+                <h1>Mini Llama3 Chatbot!</h1>
             </div>
         </header>
         <div id="conversation"></div>
@@ -29,15 +30,6 @@
     </main>
 
     <div id="drawer" data-open="false">
-        <fieldset>
-            <legend>Select Model</legend>
-                <input type="radio" class="models" id="gpt-3.5" name="models" value="gpt-3.5-turbo" checked>
-                <label for="gpt-3.5">gpt-3.5-turbo</label><br>
-                <input type="radio" class="models" id="gpt-4" name="models" value="gpt-4-turbo">
-                <label for="gpt-4">gpt-4-turbo</label><br>
-                <input type="radio" class="models" id="gpt-4o" name="models" value="gpt-4o">
-                <label for="gpt-4o">gpt-4o</label><br>
-        </fieldset>
         <fieldset id="download-fs">
             <legend>Download Chat</legend>
             <label for="chat-title">Title</label>

@@ -76,7 +76,7 @@ pre {
     display: flex;
     gap: 10px;
     flex-direction: column;
-    top: 42px;
+    top: 20%;
     left: -600px;
     width: 220px;
     background-color: rgb(174, 230, 129);
@@ -87,7 +87,7 @@ pre {
 }
 
 #drawer[data-open = "true"] {
-    left: 12px;
+    left: 20%;
 }
 
 #prompt {
@@ -222,6 +222,6 @@ fieldset#download-fs > button {
     }
     
     #drawer[data-open="true"] {
-        left: 15.2%;
+        left: 40%;
     }
 }
