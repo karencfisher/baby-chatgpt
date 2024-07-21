@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 configDotenv();
 const chat = new ChatGroq({
   apiKey: process.env.GROQ_API_KEY,
-  model: "llama3-70b-8192",
+  model: "llama3-8b-8192",
   temperature: 0.8
 })
 
